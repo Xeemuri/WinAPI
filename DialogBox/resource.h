@@ -7,8 +7,7 @@
 #define IDC_STATIC_PASSWORD             1002
 #define IDC_EDIT_LOGIN                  1003
 #define IDC_EDIT_PASSWORD               1004
-#define IDC_BUTTON1                     1005
-#define ID_BUTTON_COPY                  1006
+#define IDC_BUTTON_COPY                 1005
 
 // Next default values for new objects
 // 
