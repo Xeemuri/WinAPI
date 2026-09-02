@@ -9,6 +9,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DialogBox", "DialogBox\Dial
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ComboBox", "ComboBox\ComboBox.vcxproj", "{C13D03AC-E3FC-48F9-A591-F2D1D4065B5B}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ListBox", "ListBox\ListBox.vcxproj", "{402EFB19-614B-4EF4-8726-4A81BC47D56C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -41,6 +43,14 @@ Global
 		{C13D03AC-E3FC-48F9-A591-F2D1D4065B5B}.Release|x64.Build.0 = Release|x64
 		{C13D03AC-E3FC-48F9-A591-F2D1D4065B5B}.Release|x86.ActiveCfg = Release|Win32
 		{C13D03AC-E3FC-48F9-A591-F2D1D4065B5B}.Release|x86.Build.0 = Release|Win32
+		{402EFB19-614B-4EF4-8726-4A81BC47D56C}.Debug|x64.ActiveCfg = Debug|x64
+		{402EFB19-614B-4EF4-8726-4A81BC47D56C}.Debug|x64.Build.0 = Debug|x64
+		{402EFB19-614B-4EF4-8726-4A81BC47D56C}.Debug|x86.ActiveCfg = Debug|Win32
+		{402EFB19-614B-4EF4-8726-4A81BC47D56C}.Debug|x86.Build.0 = Debug|Win32
+		{402EFB19-614B-4EF4-8726-4A81BC47D56C}.Release|x64.ActiveCfg = Release|x64
+		{402EFB19-614B-4EF4-8726-4A81BC47D56C}.Release|x64.Build.0 = Release|x64
+		{402EFB19-614B-4EF4-8726-4A81BC47D56C}.Release|x86.ActiveCfg = Release|Win32
+		{402EFB19-614B-4EF4-8726-4A81BC47D56C}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
