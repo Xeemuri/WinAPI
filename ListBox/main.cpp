@@ -34,7 +34,6 @@ BOOL CALLBACK DlgProc(HWND hwnd, UINT uMSG, WPARAM wParam, LPARAM lParam)
 		{
 		case IDOK:
 		{
-			HWND hListBox = GetDlgItem(hwnd, IDC_LIST_BOX);
 			INT i = SendMessage(hListBox, LB_GETCURSEL, 0, 0); //get current selection
 			CHAR sz_buffer[256] = {};
 			SendMessage(hListBox, LB_GETTEXT, i, (WPARAM)sz_buffer);
@@ -49,6 +48,12 @@ BOOL CALLBACK DlgProc(HWND hwnd, UINT uMSG, WPARAM wParam, LPARAM lParam)
 			CHAR sz_buffer[256] = {};
 			SendMessage(hEdit, WM_GETTEXT, 256, (LPARAM)sz_buffer);
 			SendMessage(hListBox, LB_ADDSTRING, 0, (LPARAM)sz_buffer);
+			break;
+		}
+		case IDC_BUTTON_DELETE:
+		{
+			INT i = SendMessage(hListBox, LB_GETCURSEL, 0, 0);
+			SendMessage(hListBox, LB_DELETESTRING, i, 0);
 			break;
 		}
 		}
