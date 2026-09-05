@@ -27,6 +27,9 @@ BOOL CALLBACK DlgProc(HWND hwnd, UINT uMSG, WPARAM wParam, LPARAM lParam)
 	break;
 	case WM_COMMAND:
 	{
+		HWND hListBox = GetDlgItem(hwnd, IDC_LIST_BOX);
+		HWND hEdit = GetDlgItem(hwnd, IDC_EDIT1);
+
 		switch (LOWORD(wParam))
 		{
 		case IDOK:
@@ -40,7 +43,14 @@ BOOL CALLBACK DlgProc(HWND hwnd, UINT uMSG, WPARAM wParam, LPARAM lParam)
 			MessageBox(hwnd, sz_message, "Выбранный элемент", MB_OK | MB_ICONINFORMATION);
 		}
 			break;
-		case IDCANCEL: EndDialog(hwnd, 0);
+		case IDCANCEL: EndDialog(hwnd, 0); break;
+		case IDC_BUTTON_ADD:
+		{
+			CHAR sz_buffer[256] = {};
+			SendMessage(hEdit, WM_GETTEXT, 256, (LPARAM)sz_buffer);
+			SendMessage(hListBox, LB_ADDSTRING, 0, (LPARAM)sz_buffer);
+			break;
+		}
 		}
 	}
 	break;
