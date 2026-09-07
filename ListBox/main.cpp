@@ -9,6 +9,7 @@ BOOL CALLBACK DlgProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, INT nCmdShow)
 {
 	DialogBoxParam(hInstance, MAKEINTRESOURCE(IDD_DIALOG1), NULL, (DLGPROC)DlgProc, 0);
+
 	return 0;
 }
 
@@ -54,6 +55,14 @@ BOOL CALLBACK DlgProc(HWND hwnd, UINT uMSG, WPARAM wParam, LPARAM lParam)
 		{
 			INT i = SendMessage(hListBox, LB_GETCURSEL, 0, 0);
 			SendMessage(hListBox, LB_DELETESTRING, i, 0);
+			break;
+		}
+		case IDC_LIST_BOX:
+		{
+			if (HIWORD(wParam) == DOUBLE_CLICK)
+			{
+				MessageBox(hListBox, "Вы дважды нажали на элемент", "", MB_OK | MB_ICONINFORMATION);
+			}
 			break;
 		}
 		}
