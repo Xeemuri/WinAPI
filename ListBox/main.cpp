@@ -31,6 +31,7 @@ BOOL CALLBACK DlgProc(HWND hwnd, UINT uMSG, WPARAM wParam, LPARAM lParam)
 	break;
 	case WM_COMMAND:
 	{
+		HWND hListBox = GetDlgItem(hwnd, IDC_LIST_BOX);
 		switch (LOWORD(wParam))
 		{
 		case IDC_LIST_BOX:
@@ -40,9 +41,12 @@ BOOL CALLBACK DlgProc(HWND hwnd, UINT uMSG, WPARAM wParam, LPARAM lParam)
 		case IDC_BUTTON_ADD:
 			DialogBoxParam(GetModuleHandle(NULL), MAKEINTRESOURCE(IDD_DIALOG_ADD), hwnd, DlgProcAdd, 0);
 			break;
+		case IDC_BUTTON_DELETE:
+			SendMessage(hListBox, LB_DELETESTRING, SendMessage(hListBox, LB_GETCURSEL, 0, 0), 0);
+			break;
 		case IDOK:
 		{
-			HWND hListBox = GetDlgItem(hwnd, IDC_LIST_BOX);
+			
 			INT i = SendMessage(hListBox, LB_GETCURSEL, 0, 0); //get current selection
 			CHAR sz_buffer[256] = {};
 			SendMessage(hListBox, LB_GETTEXT, i, (WPARAM)sz_buffer);
