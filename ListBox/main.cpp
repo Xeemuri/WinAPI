@@ -114,13 +114,31 @@ BOOL CALLBACK DlgProcEdit(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		SendMessage(hwnd, WM_SETTEXT, 0, (LPARAM)"Изменение элемента");
 		INT i = SendMessage(hListBox, LB_GETCURSEL, 0, 0);
 		SendMessage(hListBox, LB_GETTEXT, i, (LPARAM)sz_buffer);
-		SetFocus(hEdit);
 		SendMessage(hEdit, WM_SETTEXT, 0, (LPARAM)sz_buffer);
-
+		DWORD dwError = GetLastError();
+		SetFocus(hEdit);
+		DWORD start = 0;
+		DWORD n = SendMessage(hEdit, EM_LINELENGTH, -1, 0);
+		SendMessage(hEdit, EM_SETSEL, (WPARAM)&start, (LPARAM)&n);
+		break;
+	}
+	case WM_COMMAND:
+	{
+		switch (LOWORD(wParam))
+		{
+		case IDOK:
+		{
+			SendMessage(hEdit, WM_GETTEXT, 256, (LPARAM)sz_buffer);
+			INT i = SendMessage(hListBox, LB_GETCURSEL, 0, 0);
+			SendMessage(hListBox, LB_DELETESTRING, i, 0);
+			SendMessage(hListBox, LB_INSERTSTRING, i, (LPARAM)sz_buffer);
+			EndDialog(hwnd, 0);
+			break;
+		}
+		case IDCANCEL: EndDialog(hwnd, 0); break;
+		}
 	}
 	break;
-	case WM_COMMAND:
-		break;
 	case WM_CLOSE: EndDialog(hwnd, 0); break;
 	}
 	return FALSE;
