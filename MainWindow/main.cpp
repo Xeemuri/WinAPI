@@ -17,7 +17,7 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	//wClass.hIconSm = LoadIcon(NULL, IDI_APPLICATION);
 	wClass.hIcon = (HICON)LoadImage(hInstance, "bitcoin.ico", IMAGE_ICON, LR_DEFAULTSIZE, LR_DEFAULTSIZE, LR_LOADFROMFILE);
 	wClass.hIconSm = (HICON)LoadImage(hInstance, "bitcoin.ico", IMAGE_ICON, LR_DEFAULTSIZE, LR_DEFAULTSIZE, LR_LOADFROMFILE);
-	wClass.hCursor = (HCURSOR)LoadImage(hInstance, "dollar.ico", IMAGE_ICON, LR_DEFAULTSIZE, LR_DEFAULTSIZE, LR_LOADFROMFILE);
+	wClass.hCursor = (HCURSOR)LoadImage(hInstance, "starcraft-original\\Busy.ani", IMAGE_ICON, 25, 25, LR_LOADFROMFILE);
 	wClass.hbrBackground = (HBRUSH)(COLOR_WINDOW);
 
 	wClass.lpszClassName = g_szMyWindowClass;
@@ -40,7 +40,10 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		CW_USEDEFAULT, CW_USEDEFAULT,		//Position
 		CW_USEDEFAULT, CW_USEDEFAULT,		//Window size
 		NULL,								//Parent window
-		NULL,								//Menu
+		NULL,								//hMenu. Для главного окна сюда передается Resource ID главного меню,
+											//Для дочернего окна в hMenu передается ResourceID создаваемго элемента главного окна
+											//По этому ResourceID мы сможем находить HWND нужного элемента при помощи функциии GetDlgItem(hwnd, RESORCE_ID)
+											//Абсолютно любой RESOURCE_ID предтавляет собой целое число
 		hInstance,							//Instance handle
 		NULL								//Additional application data
 	);
@@ -66,8 +69,66 @@ INT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	switch (uMsg)
 	{
 	case WM_CREATE:
+	{
+		HWND hStatic = CreateWindowEx
+		(
+			NULL,
+			"Static",
+			"Этот StaticText создан при помощи функции CreateWindow()",
+			WS_CHILD | WS_VISIBLE ,
+			10, 10,
+			500, 25,
+			hwnd,
+			(HMENU)1000,
+			GetModuleHandle(NULL),
+			NULL
+		);
+		HWND hEdit = CreateWindowEx
+		(
+			NULL,
+			"Edit",
+			"Это текстовое поле создано при помощи функции CreateWindowEx()",
+			WS_CHILD | WS_VISIBLE | WS_BORDER | ES_RIGHT,
+			//WS_ - Window Style
+			10, 45,
+			500, 25,
+			hwnd,
+			(HMENU)1001,
+			GetModuleHandle(NULL),
+			NULL
+		);
+		HWND hButton = CreateWindowEx
+		(
+			NULL,
+			"Button",
+			"Применить",
+			WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, //BS_ - Button Style
+			410, 67,
+			100, 32,
+			hwnd,
+			(HMENU)1002,
+			GetModuleHandle(NULL),
+			NULL
+		);
+	}
 		break;
 	case WM_COMMAND:
+	{
+		CHAR sz_buffer[256] = {};
+		switch (LOWORD(wParam))
+		{
+
+		case 1002:
+		{
+			CHAR sz_buffer[256] = {};
+			HWND hStatic = GetDlgItem(hwnd, 1000);
+			HWND hEdit = GetDlgItem(hwnd, 1001);
+			SendMessage(hEdit, WM_GETTEXT, sizeof(sz_buffer), (LPARAM)sz_buffer);
+			SendMessage(hStatic, WM_SETTEXT, 0, (LPARAM)sz_buffer);
+			SendMessage(hwnd, WM_SETTEXT, 0, (LPARAM)sz_buffer);
+		}
+		}
+	}
 		break;
 	case WM_DESTROY:
 		PostQuitMessage(0);
