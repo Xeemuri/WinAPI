@@ -17,7 +17,7 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	//wClass.hIconSm = LoadIcon(NULL, IDI_APPLICATION);
 	wClass.hIcon = (HICON)LoadImage(hInstance, "bitcoin.ico", IMAGE_ICON, LR_DEFAULTSIZE, LR_DEFAULTSIZE, LR_LOADFROMFILE);
 	wClass.hIconSm = (HICON)LoadImage(hInstance, "bitcoin.ico", IMAGE_ICON, LR_DEFAULTSIZE, LR_DEFAULTSIZE, LR_LOADFROMFILE);
-	wClass.hCursor = LoadCursor(NULL, IDC_ARROW);
+	wClass.hCursor = (HCURSOR)LoadImage(hInstance, "dollar.ico", IMAGE_ICON, LR_DEFAULTSIZE, LR_DEFAULTSIZE, LR_LOADFROMFILE);
 	wClass.hbrBackground = (HBRUSH)(COLOR_WINDOW);
 
 	wClass.lpszClassName = g_szMyWindowClass;
