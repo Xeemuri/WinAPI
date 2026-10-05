@@ -8,6 +8,7 @@
 CONST CHAR g_szClassName[] = "Calc P_418";
 CONST CHAR* g_OPERATIONS[] = { "+", "-", "*", "/" };
 INT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
+VOID SetSkin(HWND hwnd, CONST CHAR sz_skin[]);
 
 INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, INT nCmdShow)
 {
@@ -254,6 +255,31 @@ INT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		break;
 	case WM_CLOSE:
 		DestroyWindow(hwnd);
+	
+	case WM_CONTEXTMENU:
+	{
+		HMENU hMenu = CreatePopupMenu();
+		InsertMenu(hMenu, 0, MF_BYPOSITION | MF_STRING, IDR_EXIT, "Exit");
+		InsertMenu(hMenu, 0, MF_BYPOSITION | MF_STRING, IDR_SQUARE_BLUE, "Square blue");
+		InsertMenu(hMenu, 0, MF_BYPOSITION | MF_STRING, IDR_METAL_MISTRAL, "Metal mistral");
+
+		INT item = TrackPopupMenu
+		(
+			hMenu,
+
+			TPM_RIGHTALIGN | TPM_BOTTOMALIGN | TPM_RETURNCMD | TPM_HORNEGANIMATION | TPM_VERNEGANIMATION,
+			LOWORD(lParam), HIWORD(lParam),
+			NULL,
+			hwnd,
+			NULL
+		);
+		switch (item)
+		{
+		case IDR_METAL_MISTRAL: SetSkin(hwnd, "METAL_MISTRAL"); break;
+		case IDR_SQUARE_BLUE: SetSkin(hwnd, "SQUARE_BLUE"); break;
+		case IDR_EXIT: SendMessage(hwnd, WM_CLOSE, 0, 0); break;
+		}
+	}
 	default:return DefWindowProc(hwnd, uMsg, wParam, lParam);
 	}
 	return FALSE;
