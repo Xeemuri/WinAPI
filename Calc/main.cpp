@@ -1,7 +1,9 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include<Windows.h>
+#include <cstdio>
 #include "resource.h"
 #include "dimentions.h"
+#include "ButtonsBMP.h"
 
 CONST CHAR g_szClassName[] = "Calc P_418";
 CONST CHAR* g_OPERATIONS[] = { "+", "-", "*", "/" };
@@ -85,7 +87,7 @@ INT WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, IN
 		NULL,
 		"Button",
 		"0",
-		WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
+		WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON ,
 		//g_i_BUTTON_START_X, g_i_BUTTON_START_Y + (g_i_BUTTON_SIZE + g_i_INTERVAL) * 3,
 		BUTTON_SHIFT_X(0), BUTTON_SHIFT_Y(3),
 		g_i_DOUBLE_BUTTON_SIZE, g_i_BUTTON_SIZE,
@@ -255,4 +257,23 @@ INT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	default:return DefWindowProc(hwnd, uMsg, wParam, lParam);
 	}
 	return FALSE;
+}
+
+VOID SetSkin(HWND hwnd, CONST CHAR sz_skin[])
+{
+	CHAR sz_bitmap[256] = {};
+	for (int i = 0; i <= 17; i++)
+	{
+		sprintf(sz_bitmap, "BMP\\%s\\%s", sz_skin, g_ButtonsBMP[i]);
+		HBITMAP hBitmap = (HBITMAP)LoadImage
+		(
+			GetModuleHandle(NULL),
+			sz_bitmap,
+			IMAGE_BITMAP,
+			i > 0 ? g_i_BUTTON_SIZE : g_i_DOUBLE_BUTTON_SIZE,
+			i < 17 ? g_i_BUTTON_SIZE : g_i_DOUBLE_BUTTON_SIZE,
+			LR_LOADFROMFILE
+		);
+		SendMessage(GetDlgItem(hwnd, IDC_BUTTON_0 + i), BM_SETIMAGE, IMAGE_BITMAP, (LPARAM)hBitmap);
+	}
 }
